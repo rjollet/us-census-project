@@ -1,0 +1,12 @@
+{
+  "name": "us-census-app",
+  "description": "Census Frontend",
+  "version": "0.0.1",
+  "homepage": "https://github.com/rjollet/us-census-project",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route":"1.2.x",
+    "angular-mocks":"1.2.x"
+  }
+}
