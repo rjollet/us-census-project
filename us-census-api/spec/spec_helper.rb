@@ -4,8 +4,6 @@ ENV['RACK_ENV'] = 'test'
 require 'minitest/autorun'
 require 'minitest/rg'
 require 'rack/test'
-require 'vcr'
-require 'webmock'
 
 require_relative '../init.rb'
 
@@ -15,11 +13,6 @@ def app
   USCensusAPI
 end
 
-FIXTURES_FOLDER = 'spec/fixtures'
-CASSETTES_FOLDER = "#{FIXTURES_FOLDER}/cassettes"
-CASSETTE = 'census'
-
-VCR.configure do |c|
-  c.cassette_library_dir = CASSETTES_FOLDER
-  c.hook_into :webmock
-end
+API_VER = 'api/v0.1'
+TABLE_VALID = 'census_learn_sql'
+TABLE_SAD = 'not_exist_table'

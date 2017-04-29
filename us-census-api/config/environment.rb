@@ -7,8 +7,10 @@ configure :development, :production do
   Hirb.enable
 end
 
-configure do
+configure :development, :test do
   ENV['DATABASE_URL'] = 'sqlite://data/us-census.db'
-  ENV['ROOT_URL'] = 'http://localhost:3000'
-  DB = Sequel.connect(ENV['DATABASE_URL'], :readonly)
+end
+
+configure do
+  DB = Sequel.connect(ENV['DATABASE_URL'], :readonly=>true)
 end

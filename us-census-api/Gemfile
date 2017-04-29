@@ -13,6 +13,8 @@ gem 'sequel'
 gem 'dry-container'
 gem 'dry-monads'
 gem 'dry-transaction'
+gem 'multi_json'
+gem 'roar'
 
 
 gem 'sqlite3'
@@ -31,9 +33,6 @@ group :test do
   gem 'minitest-rg'
 
   gem 'rack-test'
-
-  gem 'vcr'
-  gem 'webmock'
 end
 
 group :development, :production do
