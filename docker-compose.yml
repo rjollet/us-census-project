@@ -1,0 +1,16 @@
+---
+api:
+  build: us-census-api
+  command: bundle exec puma -t 5:5
+  ports:
+    - "9292:9292"
+  environment:
+    - RACK_ENV=production
+
+app:
+  build: us-census-app
+  command: npm start
+  ports:
+    - "8000:8000"
+  links:
+    - api

@@ -1,6 +1,22 @@
 # US Census Project
 
+## unzip the db
 **Please extract the database 'us-census.db.gz' in /us-census-api/data/  as 'us-census.db'**
+
+## build the docker images
+```
+docker-compose build
+```
+
+## start the API end the Web App
+```
+docker-compose up
+```
+
+API at (http://localhost:9292/)[http://localhost:9292/]
+Web App at (http://localhost:8000/)[http://localhost:8000/]
+
+## Exercise Instruction
 
 Please find the instruction of the exercise bellow:
 
