@@ -1,0 +1,42 @@
+# frozen_string_literal: true
+source 'https://rubygems.org'
+ruby '2.4.1'
+
+gem 'http'
+gem 'json'
+gem 'puma'
+gem 'rake'
+gem 'sinatra'
+
+gem 'sequel'
+
+gem 'dry-container'
+gem 'dry-monads'
+gem 'dry-transaction'
+
+
+gem 'sqlite3'
+
+
+group :development do
+  gem 'rerun'
+
+  gem 'flay'
+  gem 'flog'
+  gem 'rubocop'
+end
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-rg'
+
+  gem 'rack-test'
+
+  gem 'vcr'
+  gem 'webmock'
+end
+
+group :development, :production do
+  gem 'hirb'
+  gem 'tux'
+end
