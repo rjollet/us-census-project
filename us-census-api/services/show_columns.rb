@@ -12,7 +12,8 @@ class ShowColumns
     end.call(params)
   end
 
-  register :check_table_exist, lambda { |table|
+  register :check_table_exist, lambda { |params|
+    table = URI.decode(params[:table]).to_sym
     if DB.table_exists? table
       Right table
     else
@@ -22,9 +23,9 @@ class ShowColumns
 
   register :get_columns, lambda { |table|
     begin
-      message = Table.new table, DB[table.to_sym].columns.map(&:to_s)
+      message = Table.new table, DB[table].columns.map(&:to_s)
       Right message
-    rescue      
+    rescue
       Left Error.new :cannot_load, 'Cannot parse columns name'
     end
   }

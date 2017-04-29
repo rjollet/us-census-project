@@ -13,6 +13,10 @@ def app
   USCensusAPI
 end
 
-API_VER = 'api/v0.1'
 TABLE_VALID = 'census_learn_sql'
 TABLE_SAD = 'not_exist_table'
+
+COLUMN_VALID = 'occupation%20code'
+AVERAGE_VALID = 'age'
+
+COLUMN_SAD = 'not_valid_column'
