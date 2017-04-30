@@ -1,17 +1,13 @@
-// HomeController.js
-// For distribution, all controllers
-// are concatanated into single app.js file
-// by using Gulp
+// SummaryController.js
+// Get the summary for the submited column and average
 
 'use strict';
 
-angular.module('usCensusApp.summary', ['ngRoute', 'ngResource'])
-	.factory('SummaryResource', function($resource){
-		return $resource('http://localhost:9292/api/v0.1/tables/:table/summary')
+angular.module('usCensusApp.summary', ['ngRoute', 'ngResource', 'usCensusApp.config'])
+	.factory('SummaryResource', function($resource, API_URL){
+		return $resource(API_URL + 'tables/:table/summary')
 	})
 
-
-// Controller definition for this module
 .controller('SummaryController', function($scope, SummaryResource) {
 		var col_name = [];
 
@@ -20,7 +16,6 @@ angular.module('usCensusApp.summary', ['ngRoute', 'ngResource'])
 		$scope.col_name = [];
 
 		$scope.submit = function (){
-			console.log(JSON.stringify($scope.table));
 			SummaryResource.get(
 				{
 					table: $scope.table,
@@ -36,7 +31,7 @@ angular.module('usCensusApp.summary', ['ngRoute', 'ngResource'])
 					$scope.col_name = col_name
 				},
 				function(err) {
-					console.log(JSON.stringify(err));
+					$scope.errors = err.data.errors;
 				}
 			);
 		};

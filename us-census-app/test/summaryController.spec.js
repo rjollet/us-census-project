@@ -1,18 +1,19 @@
 describe('Summary Controller', function() {
 
   beforeEach(module('usCensusApp.summary'));
+  beforeEach(module('usCensusApp.config'));
 
   describe('Loading SummaryController', function(){
     var controller;
     var scope, httpBackend;
 
-    beforeEach(inject(function($controller, $httpBackend, $rootScope) {
+    beforeEach(inject(function($controller, $httpBackend, $rootScope, API_URL) {
       httpBackend = $httpBackend;
       scope = $rootScope.$new();
 
       httpBackend.when(
         "GET",
-        "http://localhost:9292/api/v0.1/tables/census_learn_sql/summary?average=age&column=education"
+        API_URL + "tables/census_learn_sql/summary?average=age&column=education"
       ).respond(
         {
           rows: [
@@ -35,7 +36,7 @@ describe('Summary Controller', function() {
 
       httpBackend.when(
         "GET",
-        "http://localhost:9292/api/v0.1/tables/census_learn_sql/summary?column=education"
+        API_URL + "tables/census_learn_sql/summary?column=education"
       ).respond(
         {
           rows: [

@@ -1,18 +1,19 @@
 describe('Columns Controller', function() {
 
   beforeEach(module('usCensusApp.columns'));
+  beforeEach(module('usCensusApp.config'));
 
   describe('Loading ColumnsController', function(){
     var createController;
     var scope, httpBackend;
 
-    beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    beforeEach(inject(function($controller, $rootScope, $httpBackend, API_URL) {
       scope = $rootScope.$new();
       httpBackend = $httpBackend;
 
       httpBackend.when(
         "GET",
-        "http://localhost:9292/api/v0.1/tables/census_learn_sql"
+        API_URL + "tables/census_learn_sql"
       ).respond(
         {
           table: "census_learn_sql",
@@ -27,7 +28,7 @@ describe('Columns Controller', function() {
 
       httpBackend.when(
         "GET",
-        "http://localhost:9292/api/v0.1/tables/not_valid_table"
+        API_URL + "tables/not_valid_table"
       ).respond( 404,
         {
           errors: ["the table: not_valid_table does not exist"]

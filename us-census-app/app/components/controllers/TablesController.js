@@ -1,16 +1,13 @@
-// HomeController.js
-// For distribution, all controllers
-// are concatanated into single app.js file
-// by using Gulp
+// TablesController.js
+// Get the list of tables in the database
 
 'use strict';
 
-angular.module('usCensusApp.tables', ['ngRoute', 'ngResource'])
-	.factory('TablesResource', function($resource){
-		return $resource('http://localhost:9292/api/v0.1/tables')
+angular.module('usCensusApp.tables', ['ngRoute', 'ngResource', 'usCensusApp.config'])
+	.factory('TablesResource', function($resource, API_URL){
+		return $resource(API_URL + 'tables')
 	})
 
-// Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){
 	$routeprovider.when('/', {
 		controller: 'TablesController',
@@ -18,7 +15,6 @@ angular.module('usCensusApp.tables', ['ngRoute', 'ngResource'])
 	});
 }])
 
-// Controller definition for this module
 .controller('TablesController', function($scope,TablesResource) {
 	$scope.tables = [];
 
@@ -27,7 +23,7 @@ angular.module('usCensusApp.tables', ['ngRoute', 'ngResource'])
 			$scope.tables = response.tables
 		},
 		function(err) {
-			console.log(JSON.stringify(err));
+			$scope.errors = err.data.errors;
 		}
 	);
 });

@@ -1,15 +1,16 @@
 describe('Tables Controller', function() {
 
   beforeEach(module('usCensusApp.tables'));
+  beforeEach(module('usCensusApp.config'));
 
   describe('Loading TablesController', function(){
     var controller;
     var scope, httpBackend;
 
-    beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    beforeEach(inject(function($controller, $rootScope, $httpBackend, API_URL) {
       scope = $rootScope.$new();
       httpBackend = $httpBackend;
-      httpBackend.when("GET", "http://localhost:9292/api/v0.1/tables").respond({tables:["census_learn_sql"]});
+      httpBackend.when("GET", API_URL + "tables").respond({tables:["census_learn_sql"]});
       controller = $controller("TablesController", {$scope: scope});
     }));
 

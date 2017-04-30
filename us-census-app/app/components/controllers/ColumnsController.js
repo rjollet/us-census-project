@@ -1,16 +1,13 @@
-// AboutController.js
-// For distribution, all controllers
-// are concatanated into single app.js file
-// by using Gulp
+// ColumnsController.js
+// Get the list of columns in the selected table
 
 'use strict';
 
-angular.module('usCensusApp.columns', ['ngRoute', 'ngResource'])
-	.factory('ColumnsResource', function($resource){
-		return $resource('http://localhost:9292/api/v0.1/tables/:table')
+angular.module('usCensusApp.columns', ['ngRoute', 'ngResource', 'usCensusApp.config'])
+	.factory('ColumnsResource', function($resource, API_URL){
+		return $resource(API_URL + 'tables/:table')
 	})
 
-// Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){
 	$routeprovider.when('/tables/:table', {
 		controller: 'ColumnsController',
@@ -18,7 +15,6 @@ angular.module('usCensusApp.columns', ['ngRoute', 'ngResource'])
 	});
 }])
 
-// Controller definition for this module
 .controller('ColumnsController', function($scope, $routeParams, ColumnsResource) {
 	$scope.table = $routeParams.table;
 	$scope.columns = [];
