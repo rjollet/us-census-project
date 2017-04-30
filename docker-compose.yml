@@ -6,6 +6,7 @@ api:
     - "9292:9292"
   environment:
     - RACK_ENV=production
+    - DATABASE_URL=sqlite://data/us-census.db
 
 app:
   build: us-census-app
