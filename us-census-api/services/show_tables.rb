@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Add code quality data for ruby repository
+# Show the tables in the database
 class ShowTables
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
@@ -12,20 +12,20 @@ class ShowTables
     end.call(params)
   end
 
-  register :check_if_db, lambda { |params|
+  register :check_if_db, (lambda { |params|
     if DB
       Right true
     else
-      Left Error.new :not_found, "No Database"
+      Left Error.new :not_found, 'No Database'
     end
-  }
+  })
 
-  register :get_tables, lambda { |params|
+  register :get_tables, (lambda { |params|
     begin
       message = Tables.new DB.tables.map(&:to_s)
       Right message
     rescue
-      Left Error.new :cannot_load, 'Cannot parse tables name'
+      Left Error.new :cannot_load, 'Cannot parse tables\' names'
     end
-  }
+  })
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'sinatra'
 require 'sequel'
 
@@ -9,9 +10,9 @@ end
 
 configure :development, :test do
   ENV['DATABASE_URL'] = 'sqlite://data/us-census.db'
+  ENV['APP_URL'] = 'http://localhost:8000'
 end
 
 configure do
-  ENV['APP_URL'] = 'http://localhost:8000'
-  DB = Sequel.connect(ENV['DATABASE_URL'], :readonly=>true)
+  DB = Sequel.connect(ENV['DATABASE_URL'], readonly: true)
 end

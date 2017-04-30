@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Add code quality data for ruby repository
+# Do the summary of a column with average if in params
 class ColumnSummary
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
@@ -15,59 +15,67 @@ class ColumnSummary
     end.call(params)
   end
 
-  register :check_if_column, lambda { |params|
+  register :check_if_column, (lambda { |params|
     params[:column] = URI.decode(params[:column]).to_sym
     if params[:table].nil?
-      Left Error.new :not_found, "Please give a column as a parameter"
+      Left Error.new :not_found, 'Please give a column as a parameter'
     else
       Right params
     end
-  }
+  })
 
-  register :check_table_exist, lambda { |params|
+  register :check_table_exist, (lambda { |params|
     params[:table] = URI.decode(params[:table]).to_sym
     if DB.table_exists? params[:table]
       Right params
     else
       Left Error.new :not_found, "the table: #{params[:table]} does not exist"
     end
-  }
+  })
 
-  register :check_column_exist, lambda { |params|
+  register :check_column_exist, (lambda { |params|
     if DB[params[:table]].columns.include? params[:column].to_sym
       Right params
     else
       Left Error.new :not_found, "the column: #{params[:column]} does not exist"
     end
-  }
+  })
 
-  register :check_if_average_exist, lambda { |params|
-    params[:average] = URI.decode(params[:average]).to_sym unless params[:average].nil?
+  register :check_if_average_exist, (lambda { |params|
+    if !params[:average].nil?
+      params[:average] = URI.decode(params[:average]).to_sym
+    end
     if params[:average].nil?
       Right params
     elsif DB[params[:table]].columns.include? params[:average]
       Right params
     else
-      Left Error.new :not_found, "the column to average: #{params[:average]} does not exist"
+      Left Error.new :not_found, "average: #{params[:average]} does not exist"
     end
-  }
+  })
 
-  register :get_column_summary, lambda { |params|
+  register :get_column_summary, (lambda { |params|
     begin
       if params[:average].nil?
         selection = DB[params[:table].to_sym]
-          .select{[params[:column],count(params[:column]).as(:count)]}
+          .select { [params[:column], count(params[:column]).as(:count)] }
       else
         selection = DB[params[:table].to_sym]
-          .select{[params[:column],count(params[:column]).as(:count), avg(params[:average])]}
+          .select {
+            [
+              params[:column],
+              count(params[:column]).as(:count),
+              avg(params[:average])
+            ]
+          }
       end
       data = selection.group(params[:column].to_sym)
-        .having{count(params[:column]) > 0}
-        .reverse_order{count(params[:column])}
+        .having { count(params[:column]) > 0 }
+        .reverse_order { count(params[:column]) }
         .all
       Right Summary.new data
     rescue
-      Left Error.new :cannot_load, 'Cannot load columns information'
+      Left Error.new :cannot_load, "Cannot get #{params['column']} summary"
     end
-  }
+  })
 end

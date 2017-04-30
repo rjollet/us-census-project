@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby '2.4.1'
 
@@ -16,9 +17,7 @@ gem 'dry-transaction'
 gem 'multi_json'
 gem 'roar'
 
-
 gem 'sqlite3'
-
 
 group :development do
   gem 'rerun'

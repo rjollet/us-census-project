@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# configure based on environment
+# configure summary routes
 class USCensusAPI < Sinatra::Base
   get "/#{API_VER}/tables/:table/summary/?" do
     headers 'Access-Control-Allow-Origin' => ENV['APP_URL']
