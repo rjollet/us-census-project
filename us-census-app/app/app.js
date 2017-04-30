@@ -1,8 +1,8 @@
 'use strict';
 
 // Defining Angular app model with all other dependent modules
-var usCensusApp = angular.module('usCensusApp',['ngRoute',
-	'usCensusApp.tables', 'usCensusApp.columns', 'usCensusApp.summary']);
+var usCensusApp = angular.module('usCensusApp',['ngRoute', 'ngResource',
+	'usCensusApp.tables', 'usCensusApp.columns', 'usCensusApp.summary'])
 
 usCensusApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
