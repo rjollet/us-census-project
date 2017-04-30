@@ -6,14 +6,13 @@
 'use strict';
 
 angular.module('usCensusApp.summary', ['ngRoute', 'ngResource'])
-	.factory('SummaryResourse', function($resource){
+	.factory('SummaryResource', function($resource){
 		return $resource('http://localhost:9292/api/v0.1/tables/:table/summary')
 	})
 
 
 // Controller definition for this module
-.controller('SummaryController', function($scope, SummaryResourse) {
-
+.controller('SummaryController', function($scope, SummaryResource) {
 		var col_name = [];
 
 		$scope.values = [];
@@ -21,18 +20,24 @@ angular.module('usCensusApp.summary', ['ngRoute', 'ngResource'])
 		$scope.col_name = [];
 
 		$scope.submit = function (){
+			console.log(JSON.stringify($scope.table));
+			SummaryResource.get(
+				{
+					table: $scope.table,
+					column: $scope.column,
+					average: $scope.average
+				},
+				function(response) {
+					$scope.rows = response.rows
+					$scope.values = Object.keys($scope.rows[0]);
 
-			SummaryResourse.get({
-				table: $scope.table,
-				column: $scope.column,
-				average: $scope.average
-			}, function(response) {
-				$scope.rows = response.rows
-				$scope.values = Object.keys($scope.rows[0]);
-
-				col_name = Object.keys($scope.rows[0]);
-				if (col_name[2]) {col_name[2] = 'Average ' + col_name[2].split("`")[1]}
-				$scope.col_name = col_name
-			});
+					col_name = Object.keys($scope.rows[0]);
+					if (col_name[2]) {col_name[2] = 'Average ' + col_name[2].split("`")[1]}
+					$scope.col_name = col_name
+				},
+				function(err) {
+					console.log(JSON.stringify(err));
+				}
+			);
 		};
 });

@@ -6,7 +6,7 @@
 'use strict';
 
 angular.module('usCensusApp.columns', ['ngRoute', 'ngResource'])
-	.factory('ColumnsResourse', function($resource){
+	.factory('ColumnsResource', function($resource){
 		return $resource('http://localhost:9292/api/v0.1/tables/:table')
 	})
 
@@ -19,13 +19,17 @@ angular.module('usCensusApp.columns', ['ngRoute', 'ngResource'])
 }])
 
 // Controller definition for this module
-.controller('ColumnsController', function($scope, $routeParams, ColumnsResourse) {
+.controller('ColumnsController', function($scope, $routeParams, ColumnsResource) {
+	$scope.table = $routeParams.table;
+	$scope.columns = [];
+	$scope.errors = [];
 
-		$scope.table = $routeParams.table;
-		$scope.columns = [];
-
-		ColumnsResourse.get({table: $scope.table}, function(response) {
+	ColumnsResource.get({table: $scope.table},
+		function(response) {
 			$scope.columns = response.columns;
-		});
-
+		},
+		function(err) {
+			$scope.errors = err.data.errors;
+		}
+	);
 });

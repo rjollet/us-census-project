@@ -6,7 +6,7 @@
 'use strict';
 
 angular.module('usCensusApp.tables', ['ngRoute', 'ngResource'])
-	.factory('TablesResourse', function($resource){
+	.factory('TablesResource', function($resource){
 		return $resource('http://localhost:9292/api/v0.1/tables')
 	})
 
@@ -19,10 +19,15 @@ angular.module('usCensusApp.tables', ['ngRoute', 'ngResource'])
 }])
 
 // Controller definition for this module
-.controller('TablesController', function($scope,TablesResourse) {
+.controller('TablesController', function($scope,TablesResource) {
 	$scope.tables = [];
 
-	TablesResourse.get(function(response) {
-		$scope.tables = response.tables
-	})
+	TablesResource.get(
+		function(response) {
+			$scope.tables = response.tables
+		},
+		function(err) {
+			console.log(JSON.stringify(err));
+		}
+	);
 });
