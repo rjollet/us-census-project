@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Summary = Struct.new :rows
+Summary = Struct.new :limit, :offset, :rows

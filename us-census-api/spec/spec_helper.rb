@@ -20,3 +20,6 @@ COLUMN_VALID = 'occupation%20code'
 AVERAGE_VALID = 'age'
 
 COLUMN_SAD = 'not_valid_column'
+
+LIMIT = 10
+OFFSET = 0

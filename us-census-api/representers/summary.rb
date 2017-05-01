@@ -4,5 +4,7 @@
 class SummaryRepresenter < Roar::Decorator
   include Roar::JSON
 
+  property :limit
+  property :offset
   collection :rows
 end

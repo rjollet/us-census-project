@@ -29,7 +29,7 @@ class ColumnSummary
     begin
       params[:column] = URI.decode(params[:column]).to_sym
       params[:table] = URI.decode(params[:table]).to_sym
-      params[:average] = URI.decode(params[:average]).to_sym if params.key? :average
+      params[:average] = URI.decode(params[:average]).to_sym unless params[:average].nil?
       Right params
     rescue
       Left Error.new :bad_request, "Cannot parse the parameter #{params}"
@@ -78,14 +78,13 @@ class ColumnSummary
           [params[:column], count(params[:column]).as(:count)]
         }
       end
+
       query = select_query.group(params[:column])
         .having { count(params[:column]) > 0 }
         .reverse_order { count(params[:column]) }
+        .limit(params[:limit], params[:offset])
 
-      query = query.limit(params[:limit]) if params.key? :limit
-
-      data = query.all
-      Right Summary.new data
+      Right Summary.new params[:limit], params[:offset], query.all
     rescue
       Left Error.new :cannot_load, "Cannot get #{params[:column]} summary"
     end
