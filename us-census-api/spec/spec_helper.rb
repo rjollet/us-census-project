@@ -23,3 +23,4 @@ COLUMN_SAD = 'not_valid_column'
 
 LIMIT = 10
 OFFSET = 0
+TOTAL = 47

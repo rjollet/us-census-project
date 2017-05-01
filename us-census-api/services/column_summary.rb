@@ -11,6 +11,7 @@ class ColumnSummary
       step :parse_url_to_symbol
       step :check_table_exist
       step :check_column_exist
+      step :check_if_offset_lower_than_total
       step :check_if_average_exist
       step :get_column_summary
     end.call(params)
@@ -52,6 +53,23 @@ class ColumnSummary
     end
   })
 
+  register :check_if_offset_lower_than_total, (lambda { |params|
+    begin
+      total = DB[params[:table]].select {
+        count(distinct(params[:column])).as(:count)
+      }.first[:count]
+      if params[:offset] >= total
+         Left Error.new :bad_request, "offset must be lower than then number of row(#{total})"
+      else
+        params[:total] = total
+        Right params
+      end
+    rescue
+      Left Error.new :cannot_load, "Cannot load total number of values"
+    end
+
+  })
+
   register :check_if_average_exist, (lambda { |params|
     if params[:average].nil?
       Right params
@@ -84,7 +102,7 @@ class ColumnSummary
         .reverse_order { count(params[:column]) }
         .limit(params[:limit], params[:offset])
 
-      Right Summary.new params[:limit], params[:offset], query.all
+      Right Summary.new params[:limit], params[:offset], params[:total], query.all
     rescue
       Left Error.new :cannot_load, "Cannot get #{params[:column]} summary"
     end

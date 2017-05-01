@@ -6,5 +6,6 @@ class SummaryRepresenter < Roar::Decorator
 
   property :limit
   property :offset
+  property :total
   collection :rows
 end
