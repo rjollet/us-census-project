@@ -12,6 +12,7 @@ gem 'sinatra'
 gem 'sequel'
 
 gem 'dry-container'
+gem 'dry-validation'
 gem 'dry-monads'
 gem 'dry-transaction'
 gem 'multi_json'
