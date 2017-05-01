@@ -1,17 +1,23 @@
----
-api:
-  build: us-census-api
-  command: bundle exec puma -t 5:5
-  ports:
-    - "9292:9292"
-  environment:
-    - RACK_ENV=production
-    - DATABASE_URL=sqlite://data/us-census.db
+version: '2'
+services:
+  api:
+    build: us-census-api
+    command: bundle exec puma -t 5:5
+    volumes:
+      - ./us-census-api:/app
+    ports:
+      - "9292:9292"
+    environment:
+      - RACK_ENV=production
+      - DATABASE_URL=sqlite://data/us-census.db
+      - APP_URL=http://localhost:8000
 
-app:
-  build: us-census-app
-  command: npm start
-  ports:
-    - "8000:8000"
-  links:
-    - api
+  app:
+    build: us-census-app
+    command: npm start
+    volumes:
+      - ./us-census-app:/app
+    ports:
+      - "8000:8000"
+    links:
+      - api

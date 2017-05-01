@@ -13,7 +13,7 @@ describe('Summary Controller', function() {
 
       httpBackend.when(
         "GET",
-        API_URL + "tables/census_learn_sql/summary?average=age&column=education"
+        API_URL + "tables/census_learn_sql/summary?average=age&column=education&limit=10&offset=0"
       ).respond(
         {
           rows: [
@@ -36,7 +36,7 @@ describe('Summary Controller', function() {
 
       httpBackend.when(
         "GET",
-        API_URL + "tables/census_learn_sql/summary?column=education"
+        API_URL + "tables/census_learn_sql/summary?column=education&limit=10&offset=0"
       ).respond(
         {
           rows: [

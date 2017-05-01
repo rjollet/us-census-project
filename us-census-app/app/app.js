@@ -3,10 +3,7 @@
 var usCensusApp = angular.module('usCensusApp',['ngRoute', 'ngResource',
 	'usCensusApp.config', 'usCensusApp.tables', 'usCensusApp.columns', 'usCensusApp.summary'])
 
-usCensusApp.config(function($routeProvider, $locationProvider, $httpProvider, $scope) {
-
-	$scope.api_url = 'http://localhost:9292/api/v0.1/';
-
+usCensusApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
 	$routeProvider.otherwise({ redirectTo: '/'});
 
