@@ -31,6 +31,7 @@ angular.module('usCensusApp.summary', ['ngRoute', 'ngResource', 'usCensusApp.con
 					console.log(response);
 					$scope.limit = response.limit
 					$scope.offset = response.offset
+					$scope.total = response.total
 					$scope.rows = response.rows
 					$scope.values = Object.keys($scope.rows[0]);
 
@@ -48,7 +49,9 @@ angular.module('usCensusApp.summary', ['ngRoute', 'ngResource', 'usCensusApp.con
 			getSummary($scope.table, $scope.column, $scope.limit, $scope.offset, $scope.average);
 
 			$scope.next = function() {
-				$scope.offset += $scope.limit;
+				if ($scope.offset + $scope.limit < $scope.total) {
+					$scope.offset += $scope.limit
+				};
 			}
 
 			$scope.prev = function() {

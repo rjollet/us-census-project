@@ -21,8 +21,9 @@
 		<input type="submit" id="submit" value="Submit" class="btn btn-default"><br><br>
 		<div ng-show="rows.length>0" class>
 			<div class="btn-group btn-group-sm" role="group" aria-label="pages">
-				<button ng-click="prev()" class="btn btn-default">prev</button>
-				<button ng-click="next()" class="btn btn-default">next</button>
+				<button ng-disabled="(offset === 0)" ng-click="prev()" class="btn btn-default">prev</button>
+				<a class="btn btn-default disabled">{{offset+1}}/{{total}} - {{offset+limit}}/{{total}}</a>
+				<button ng-disabled="(offset+limit >= total)" ng-click="next()" class="btn btn-default">next</button>
 			</div>
 			<table  class="table table-striped table-hover">
 				<thead class="thead-inverse">
