@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'sinatra'
+require 'sinatra/base'
 require 'http'
+require 'concurrent'
 
 require_relative 'base'
 

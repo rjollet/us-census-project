@@ -55,9 +55,16 @@ class ColumnSummary
 
   register :check_if_offset_lower_than_total, (lambda { |params|
     begin
-      total = DB[params[:table]].select {
-        count(distinct(params[:column])).as(:count)
-      }.first[:count]
+      USCensusAPI.settings.cache[params[:table]] ||= {}
+
+      if USCensusAPI.settings.cache[params[:table]][params[:column]].nil?
+        total = DB[params[:table]].select {
+          count(distinct(params[:column])).as(:count)
+        }.first[:count]
+        USCensusAPI.settings.cache[params[:table]][params[:column]] = total
+      else
+        total = USCensusAPI.settings.cache[params[:table]][params[:column]]
+      end
       if params[:offset] >= total
          Left Error.new :bad_request, "offset must be lower than then number of row(#{total})"
       else

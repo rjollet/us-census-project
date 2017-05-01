@@ -4,6 +4,10 @@
 class USCensusAPI < Sinatra::Base
   API_VER = 'api/v0.1'
 
+  configure do
+    set :cache, Concurrent::Hash.new()
+  end
+
   get '/?' do
     "USCensusAPI latest version endpoints are at: /#{API_VER}/"
   end
