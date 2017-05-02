@@ -6,4 +6,5 @@ class TableRepresenter < Roar::Decorator
 
   property :table
   collection :columns
+  collection :numerical_columns
 end

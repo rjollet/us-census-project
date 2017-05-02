@@ -9,6 +9,7 @@ class ShowColumns
     Dry.Transaction(container: self) do
       step :check_table_exist
       step :get_columns
+      step :get_numerical_columns
     end.call(params)
   end
 
@@ -23,10 +24,24 @@ class ShowColumns
 
   register :get_columns, (lambda { |table|
     begin
-      message = Table.new table, DB[table].columns.map(&:to_s)
-      Right message
+      Right table: table, columns: DB[table].columns.map(&:to_s)
     rescue
       Left Error.new :cannot_load, 'Cannot parse columns name'
     end
   })
+
+  register :get_numerical_columns, (lambda { |params|
+    begin
+      num_col = schema_to_numerical_columns(DB.schema(params[:table]))
+      Right Table.new params[:table], params[:columns], num_col
+    rescue
+      Left Error.new :cannot_load, 'Cannot parse columns name'
+    end
+  })
+
+  def self.schema_to_numerical_columns(schema)
+    schema.select { |col|
+      [:integer, :float, :long, :double].include? col[1][:type]
+    }.map{ |col| col[0].to_s}
+  end
 end
