@@ -9,9 +9,9 @@
 		</div>
 		<div class="form-group">
 			<label for="average">Average</label>
-			<select ng-model="average" name="column" id="average" class="form-control">
+			<select ng-model="average" name="numerical_columns" id="average" class="form-control">
 				<option value=""></option>
-				<option ng:repeat="column in columns" value={{column}}>{{column}}</option>
+				<option ng:repeat="num_col in numerical_columns" value={{num_col}}>{{num_col}}</option>
 			</select>
 		</div>
 		<div class="form-group">

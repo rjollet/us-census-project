@@ -14,7 +14,7 @@ services:
   app:
     build: us-census-app
     volumes:
-      - ./us-census-app/app:/app:Z
+      - ./us-census-app/app:/home/census/app:Z
     ports:
       - "8000:8000"
     links:

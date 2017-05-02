@@ -23,6 +23,7 @@ angular.module('usCensusApp.columns', ['ngRoute', 'ngResource', 'usCensusApp.con
 	ColumnsResource.get({table: $scope.table},
 		function(response) {
 			$scope.columns = response.columns;
+			$scope.numerical_columns = response.numerical_columns;
 		},
 		function(err) {
 			$scope.errors = err.data.errors;
