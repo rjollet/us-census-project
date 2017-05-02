@@ -2,9 +2,8 @@ version: '2'
 services:
   api:
     build: us-census-api
-    command: bundle exec puma -t 5:5
     volumes:
-      - ./us-census-api:/app
+      - ./us-census-api:/app:Z
     ports:
       - "9292:9292"
     environment:
@@ -14,9 +13,8 @@ services:
 
   app:
     build: us-census-app
-    command: npm start
     volumes:
-      - ./us-census-app:/app
+      - ./us-census-app/app:/app:Z
     ports:
       - "8000:8000"
     links:

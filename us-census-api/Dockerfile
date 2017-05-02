@@ -11,3 +11,4 @@ ADD Gemfile* $APP_HOME/
 RUN bundle install --without development test
 
 ADD . $APP_HOME
+CMD bundle exec puma -t 5:5
