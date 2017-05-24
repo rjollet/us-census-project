@@ -13,8 +13,8 @@ docker-compose build
 docker-compose up
 ```
 
-API at (http://localhost:9292/)[http://localhost:9292/]
-Web App at (http://localhost:8000/)[http://localhost:8000/]
+API at [http://localhost:9292/](http://localhost:9292/)
+Web App at [http://localhost:8000/](http://localhost:8000/)
 
 ## Exercise Instruction
 
